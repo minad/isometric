@@ -1,8 +1,8 @@
 CXX=g++
 #CFLAGS=-O3 -fexceptions -funroll-loops -Wall -Wno-switch
 CFLAGS=-g -Wall -fexceptions -Wall -Wno-switch
-LIBS=-lSDL -lSDL_image -lSDL_ttf -llua -llualib
-INCLUDES=-I/usr/include/SDL -Iinclude
+LIBS=-lSDL -lSDL_image -lSDL_ttf -llua5.3
+INCLUDES=-I/usr/include/SDL -Iinclude -I/usr/include/lua5.3
 
 SOURCES=\
 src/Engine/Audio/Mixer.cpp\
@@ -38,4 +38,4 @@ isometric: $(OBJECTS)
 	$(CXX) -c $(CFLAGS) $(INCLUDES) -o $@ $<
 
 clean:
-	rm -f $(OBJECTS)	
+	rm -f $(OBJECTS)

@@ -168,7 +168,7 @@ inline Surface* getVideoSurface()
     return SDL_GetVideoSurface();
 }
 
-inline const VideoInfo* getVideoInfo()           
+inline const VideoInfo* getVideoInfo()
 {
     return SDL_GetVideoInfo();
 }
@@ -319,7 +319,7 @@ inline int setAlpha(Surface* surface, Uint32 flag, Uint8 alpha)
 
 inline bool setClipRect(Surface* surface, Rect* rect)
 {
-    return SDL_SetClipRect(surface, rect);    
+    return SDL_SetClipRect(surface, rect);
 }
 
 inline void getClipRect(Surface* surface, Rect* rect)
@@ -450,7 +450,7 @@ inline void unlock()
 
 typedef SDL_GrabMode GrabMode;
 
-const GrabMode 
+const GrabMode
     GRAB_QUERY      = SDL_GRAB_QUERY,
     GRAB_OFF        = SDL_GRAB_OFF,
     GRAB_ON         = SDL_GRAB_ON,
@@ -576,13 +576,13 @@ const EventAction
     ADDEVENT  = SDL_ADDEVENT,
     PEEKEVENT = SDL_PEEKEVENT,
     GETEVENT  = SDL_GETEVENT;
-    
+
 inline int peepEvents(Event* events, int numevents,
                       EventAction action, Uint32 mask)
 {
     return SDL_PeepEvents(events, numevents, action, mask);
-}           
-           
+}
+
 inline int pollEvent(Event* event)
 {
     return SDL_PollEvent(event);
@@ -626,8 +626,8 @@ inline Uint8 eventState(Uint8 type, int state)
 /************************************************************************
  ** file SDL_types.h                           **
  ************************************************************************/
- 
-enum 
+
+enum
 {
     PRESSED = SDL_PRESSED,
     RELEASED = SDL_RELEASED
@@ -666,7 +666,7 @@ const AudioStatus
     AUDIO_STOPPED = SDL_AUDIO_STOPPED,
     AUDIO_PLAYING = SDL_AUDIO_PLAYING,
     AUDIO_PAUSED  = SDL_AUDIO_PAUSED;
-    
+
 inline AudioStatus getAudioStatus()
 {
     return SDL_GetAudioStatus();
@@ -678,11 +678,11 @@ inline void pauseAudio(bool pause_on)
 }
 
 inline AudioSpec* loadWAV_RW(RWops* src, int freesrc,
-                             AudioSpec* spec, Uint8** audio_buf, 
+                             AudioSpec* spec, Uint8** audio_buf,
                              Uint32* audio_len)
 {
     return SDL_LoadWAV_RW(src, freesrc, spec, audio_buf, audio_len);
-}          
+}
 
 inline AudioSpec* loadWAV(const char* filename, AudioSpec* spec,
                           Uint8** audio_buf, Uint32* audio_len)
@@ -701,7 +701,7 @@ inline int buildAudioCVT(AudioCVT* cvt, Uint16 srcformat,
 {
     return SDL_BuildAudioCVT(cvt, srcformat, srcchannels, srcrate,
                              dstformat, dstchannels, dstrate);
-}          
+}
 
 inline int convertAudio(AudioCVT* cvt)
 {
@@ -805,7 +805,7 @@ inline int joystickIndex(Joystick* joystick)
 
 inline int joystickNumAxes(Joystick* joystick)
 {
-    return SDL_JoystickNumAxes(joystick);    
+    return SDL_JoystickNumAxes(joystick);
 }
 
 inline int joystickNumBalls(Joystick* joystick)
@@ -838,7 +838,7 @@ inline Sint16 joystickGetAxis(Joystick* joystick, int axis)
     return SDL_JoystickGetAxis(joystick, axis);
 }
 
-enum 
+enum
 {
     HAT_CENTERED  = SDL_HAT_CENTERED,
     HAT_UP        = SDL_HAT_UP,
@@ -879,13 +879,13 @@ typedef SDLKey     Key;
 typedef SDLMod     Mod;
 typedef SDL_keysym Keysym;
 
-const Uint32 
+const Uint32
     ALL_HOTKEYS = SDL_ALL_HOTKEYS;
 
 inline int enableUNICODE(int enable)
 {
     return SDL_EnableUNICODE(enable);
-}    
+}
 
 const int
     DEFAULT_REPEAT_DELAY    = SDL_DEFAULT_REPEAT_DELAY,
@@ -983,11 +983,11 @@ enum
  ************************************************************************/
 
 /* mutex */
- 
+
 const Uint32
     MUTEX_TIMEDOUT = SDL_MUTEX_TIMEDOUT,
     MUTEX_MAXWAIT  = SDL_MUTEX_MAXWAIT;
-    
+
 typedef SDL_mutex Mutex;
 
 inline Mutex* createMutex()
@@ -1130,11 +1130,11 @@ inline void killThread(Thread* thread)
  ************************************************************************/
 
 const int TIMESLICE = 10;
-    
+
 inline Uint32 getTicks()
 {
     return SDL_GetTicks();
-}    
+}
 
 inline void delay(Uint32 ms)
 {
@@ -1182,11 +1182,11 @@ const Uint32
     APPMOUSEFOCUS = SDL_APPMOUSEFOCUS,
     APPINPUTFOCUS = SDL_APPINPUTFOCUS,
     APPACTIVE     = SDL_APPACTIVE;
-    
+
 inline Uint32 getAppState()
 {
     return SDL_GetAppState();
-}    
+}
 
 /************************************************************************
  ** file SDL_cdrom.h                                                   **
@@ -1196,14 +1196,14 @@ const int
     MAX_TRACKS  = SDL_MAX_TRACKS,
     AUDIO_TRACK = SDL_AUDIO_TRACK,
     DATA_TRACK  = SDL_DATA_TRACK;
-    
+
 const CDstatus
     CD_TRAYEMPTY = ::CD_TRAYEMPTY,
     CD_STOPPED   = ::CD_STOPPED,
     CD_PLAYING   = ::CD_PLAYING,
     CD_PAUSED    = ::CD_PAUSED,
     CD_ERROR     = ::CD_ERROR;
-    
+
 inline bool cdInDrive(int status)
 {
     return(status > 0);
@@ -1217,7 +1217,7 @@ const int CD_FPS = CD_FPS_VALUE;
 typedef SDL_CDtrack CDtrack;
 typedef SDL_CD CD;
 
-inline int cdNumDrives() 
+inline int cdNumDrives()
 {
     return SDL_CDNumDrives();
 }
@@ -1283,15 +1283,15 @@ const Uint32
     INIT_AUDIO       = SDL_INIT_AUDIO,
     INIT_VIDEO       = SDL_INIT_VIDEO,
     INIT_CDROM       = SDL_INIT_CDROM,
-    INIT_JOYSTICK    = SDL_INIT_JOYSTICK,    
+    INIT_JOYSTICK    = SDL_INIT_JOYSTICK,
     INIT_NOPARACHUTE = SDL_INIT_NOPARACHUTE,
     INIT_EVENTTHREAD = SDL_INIT_EVENTTHREAD,
     INIT_EVERYTHING  = SDL_INIT_EVERYTHING;
-    
+
 inline int init(Uint32 flags)
 {
     return SDL_Init(flags);
-}    
+}
 
 inline int initSubSystem(Uint32 flags)
 {
@@ -1323,10 +1323,10 @@ inline void setError(const char* fmt, ...)
     va_list ap;
     va_start(ap, fmt);
 #ifdef HAVE_VSNPRINTF
-    vsnprintf(buffer, sizeof (buffer), fmt, ap)
+    vsnprintf(buffer, sizeof (buffer), fmt, ap);
 #else
     vsprintf(buffer, fmt, ap);
-#endif 
+#endif
     va_end(ap);
     SDL_SetError(buffer);
 }
@@ -1355,7 +1355,7 @@ const ErrorCode
     EFSEEK    = SDL_EFSEEK,
     LASTERROR = SDL_LASTERROR;
 
-inline void error(ErrorCode code) 
+inline void error(ErrorCode code)
 {
     SDL_Error(code);
 }
@@ -1363,7 +1363,7 @@ inline void error(ErrorCode code)
 /************************************************************************
  ** file SDL_image.h                                                   **
  ************************************************************************/
- 
+
 namespace IMG {
 
 inline char* getError()
@@ -1523,7 +1523,7 @@ inline char* getError()
 {
     return TTF_GetError();
 }
-    
+
 inline Font* openFont(const char* file, int ptsize)
 {
     return TTF_OpenFont(file, ptsize);
@@ -1602,7 +1602,7 @@ inline char* fontFaceStyleName(Font* font)
 inline int glyphMetrics(Font* font, Uint16 ch, int* minx, int* maxx,
                         int* miny, int* maxy, int* advance)
 {
-    return TTF_GlyphMetrics(font, ch, minx, maxx, miny, maxy, advance);		
+    return TTF_GlyphMetrics(font, ch, minx, maxx, miny, maxy, advance);
 }
 
 inline int sizeText(Font* font, const char* text, int* w, int* h)

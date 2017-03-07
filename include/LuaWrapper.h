@@ -1,11 +1,9 @@
 #ifndef _LuaWrapper_h
 #define _LuaWrapper_h
 
-extern "C" {
-#include "lua.h"
-#include "lualib.h"
-#include "lauxlib.h"
-}
+#include <lua.h>
+#include <lualib.h>
+#include <lauxlib.h>
 
 //#include "luabind/luabind.hpp"
 
@@ -28,7 +26,7 @@ enum
 
 inline State open()
 {
-    return lua_open();
+    return luaL_newstate();
 }
 
 inline void close(State state)
@@ -63,12 +61,12 @@ inline void open_math(State state)
 
 inline void dostring(State state, const char* str)
 {
-    lua_dostring(state, str);
+    luaL_dostring(state, str);
 }
 
 inline void dofile(State state, const char* file)
 {
-    lua_dofile(state, file);
+    luaL_dofile(state, file);
 }
 
 } // namespace lua
