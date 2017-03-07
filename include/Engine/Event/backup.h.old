@@ -1,0 +1,232 @@
+#ifndef _Engine_Event_Event_h
+#define _Engine_Event_Event_h
+
+#include "SDLWrapper.h" 
+#include "Base.h"
+#include "Logger.h"
+#include <list>
+#include <string>
+
+namespace Engine::Event {
+
+struct EventSource
+{
+};
+
+struct EventListener
+{
+};
+
+struct Event
+{
+    EventSource *source;
+
+    Event(EventSource *source)
+        : source(source) {}
+};
+
+struct KeyEvent : public Event
+{
+    SDL::Key key;
+    SDL::Mod mod;
+    Uint16   unicode;
+    bool     pressed;
+
+    KeyEvent(EventSource *source, SDL::Key key, SDL::Mod mod, Uint16 unicode, bool pressed)
+        : Event(source), key(key), mod(mod), unicode(unicode), pressed(pressed) {}
+};
+
+struct MouseEvent : public Event
+{
+    enum Button
+    {
+        LEFT,
+	MIDDLE,
+	RIGHT,
+	WHEELUP,
+	WHEELDOWN,
+    };
+    
+    Button button;
+    int    x, y;
+    bool   pressed;
+
+    MouseEvent(EventSource *source, Button button, int x, int y, bool pressed)
+        : Event(source), button(button), x(x), y(y), pressed(pressed) {}
+};
+
+struct MouseMotionEvent : public Event
+{
+    enum
+    {
+        LEFT_MASK   = 0x1,
+	MIDDLE_MASK = 0x2,
+	RIGHT_MASK  = 0x4,
+    };
+    
+    int buttonState;
+    int x, y;
+    int xrel, yrel;
+
+    MouseMotionEvent(EventSource *source, int buttonState, int x, int y, int xrel, int yrel)
+        : Event(source), buttonState(buttonState), x(x), y(y), xrel(xrel), yrel(yrel) {}
+};
+
+struct WindowEvent : public Event
+{
+    int  width, height;
+    bool active;
+
+    WindowEvent(EventSource *source, int width, int height, bool active)
+        : Event(source), width(width), height(height), active(active) {}
+};
+
+struct PropertyChangeEvent : public Event
+{
+    std::string property;
+
+    PropertyChangeEvent(EventSource *source, const std::string &property)
+        : Event(source), property(property) {}
+};
+
+struct TimerEvent : public Event
+{
+    int interval;
+    void *param;
+
+    TimerEvent(EventSource *source, int interval, void *param)
+        : Event(source), interval(interval), param(param) {}
+};
+
+struct KeyListener : public EventListener
+{
+    virtual void keyEvent(const KeyEvent &event)
+    {}
+
+    virtual void keyDownEvent(const KeyEvent &event)
+    {
+        keyEvent(event);
+    }
+
+    virtual void keyUpEvent(const KeyEvent &event)
+    {
+        keyEvent(event);
+    }
+};
+
+struct MouseMotionListener : public EventListener
+{
+    virtual void mouseMotionEvent(const MouseMotionEvent &event)
+    {}
+};
+
+struct MouseListener : public EventListener
+{
+    virtual void mouseEvent(const MouseEvent &event)
+    {}
+
+    virtual void mouseDownEvent(const MouseEvent &event)
+    {
+        mouseEvent(event);
+    }
+
+    virtual void mouseUpEvent(const MouseEvent &event)
+    {
+        mouseEvent(event);
+    }
+};
+
+struct WindowListener : public EventListener
+{
+    virtual void windowActiveEvent(const WindowEvent &event)
+    {}
+
+    virtual void windowResizeEvent(const WindowEvent &event)
+    {}
+
+    virtual void windowCloseEvent(const WindowEvent &event)
+    {}
+};
+
+struct PropertyChangeListener : public EventListener
+{
+    virtual void propertyChangeEvent(const PropertyChangeEvent &event)
+    {}
+};
+
+struct TimerListener : public EventListener
+{
+    virtual void timerEvent(const TimerEvent &event);
+};
+
+class SystemEventSource : public Base, EventSource
+{
+public:
+
+    void addWindowListener(WindowListener *l)
+    {
+        windowListener.push_back(l);
+    }
+    
+    void removeWindowListener(WindowListener *l)
+    {
+        windowListener.remove(l); 
+    }
+
+    void addMouseListener(MouseListener *l)
+    {
+        mouseListener.push_back(l);
+    }
+    
+    void removeMouseListener(MouseListener *l)
+    {
+        mouseListener.remove(l);
+    }
+
+    void addMouseMotionListener(MouseMotionListener *l)
+    {
+        mouseMotionListener.push_back(l);
+    }
+    
+    void removeMouseMotionListener(MouseMotionListener *l)
+    {
+        mouseMotionListener.remove(l);
+    }
+	
+    void addKeyListener(KeyListener *l)
+    {
+        keyListener.push_back(l);
+    }
+    
+    void removeKeyListener(KeyListener *l)
+    {
+        keyListener.remove(l);
+    }
+
+    void processEvents();
+    
+    static SystemEventSource *getInstance();
+    
+private:
+
+    SystemEventSource()
+        : active(true), eventLogger(Logger::INFO) {}
+
+    void handleEvent(const SDL::Event &e);
+    
+    bool active;
+    
+    Logger eventLogger;
+
+    std::list<KeyListener *>         keyListener;
+    std::list<MouseListener *>       mouseListener;
+    std::list<MouseMotionListener *> mouseMotionListener;
+    std::list<WindowListener *>      windowListener;
+
+    static SmartPtr<SystemEventSource> instance;
+};
+
+} // namespace Engine::Event 
+
+#endif // _Engine_Event_Event_h
+

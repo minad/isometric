@@ -1,0 +1,3 @@
+- clipRect(dest, src) must be fixed -> SDL::upperBlit
+- Update von Karte implementieren
+- Mouse mapping

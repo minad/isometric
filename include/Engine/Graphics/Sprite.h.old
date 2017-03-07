@@ -1,0 +1,19 @@
+#ifndef _SPRITE_H
+#define _SPRITE_H
+
+class Sprite
+{
+public:
+
+    Sprite(const std::string &file);
+    ~Sprite();
+
+    void draw(Surface &display, Vector2 pos) const;
+
+private:
+
+    Vector2 pos;
+    Surface *surf;
+};
+
+#endif
